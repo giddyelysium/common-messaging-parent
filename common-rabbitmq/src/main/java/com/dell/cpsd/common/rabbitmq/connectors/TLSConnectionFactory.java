@@ -24,7 +24,7 @@ import com.rabbitmq.client.ConnectionFactory;
  * Copyright &copy; 2017 Dell Inc. or its subsidiaries.  All Rights Reserved.
  * Dell EMC Confidential/Proprietary Information
  * </p>
- * @Deprecated
+ * @deprecated
  */
 
 @Deprecated
