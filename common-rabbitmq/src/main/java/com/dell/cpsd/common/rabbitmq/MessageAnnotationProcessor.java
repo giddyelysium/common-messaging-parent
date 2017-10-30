@@ -5,10 +5,10 @@
 
 package com.dell.cpsd.common.rabbitmq;
 
-import com.dell.cpsd.common.rabbitmq.annotation.Message;
-
 import java.lang.annotation.Annotation;
 import java.util.List;
+
+import com.dell.cpsd.contract.extension.amqp.annotation.Message;
 
 /**
  * An annotation process for evaluating @Message annotations.

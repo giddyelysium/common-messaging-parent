@@ -11,7 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.dell.cpsd.common.rabbitmq.annotation.Message;
+import com.dell.cpsd.contract.extension.amqp.annotation.Message;
+
 
 /**
  * TODO: Document usage. Set proper Vision version in since tag.
