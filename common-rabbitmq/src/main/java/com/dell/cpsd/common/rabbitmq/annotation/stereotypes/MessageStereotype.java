@@ -12,7 +12,9 @@ package com.dell.cpsd.common.rabbitmq.annotation.stereotypes;
  * </p>
  *
  * @since SINCE-TBD
+ * @deprecated use {@link com.dell.cpsd.contract.extension.amqp.annotation.stereotypes.StereotypeMessage} instead
  */
+@Deprecated
 public enum MessageStereotype
 {
     REQUEST,

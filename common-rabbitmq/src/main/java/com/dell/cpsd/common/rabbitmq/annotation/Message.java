@@ -18,7 +18,9 @@ import java.lang.annotation.Target;
  * Dell EMC Confidential/Proprietary Information
  * </p>
  * @since SINCE-TDB
+ * @deprecated use {@link com.dell.cpsd.contract.extension.amqp.annotation.Message} instead
  */
+@Deprecated
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
