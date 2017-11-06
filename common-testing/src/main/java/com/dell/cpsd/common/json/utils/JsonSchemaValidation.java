@@ -68,6 +68,26 @@ public final class JsonSchemaValidation
             return message;
         }
     }
+    
+    
+    public static String validateSchema(final String schemaResourcePath, final String jsonResourcePath, final String includesDir,final String externalDir)
+    {
+        try (final InputStream streamSchema = JsonSchemaValidation.class.getResourceAsStream(schemaResourcePath);
+                final InputStream streamExample = JsonSchemaValidation.class.getResourceAsStream(jsonResourcePath))
+        {
+            final String originalContent = IOUtils.toString(streamExample);
+            final String body = MessageLoader.removeAmqpToolWrapper(originalContent);
+            final ByteArrayInputStream bodyIS = new ByteArrayInputStream(body.getBytes(StandardCharsets.UTF_8));
+            return validateSchema(streamSchema, bodyIS, includesDir,externalDir);
+        }
+        catch (final IOException e)
+        {
+            final String message = e.getMessage() + "\n" + schemaResourcePath + "\n" + jsonResourcePath;
+            LOGGER.error(message, e);
+            return message;
+        }
+    }
+    
 
     /**
      * Validate JSON message against schema definition.
@@ -114,6 +134,47 @@ public final class JsonSchemaValidation
         //Everything fine
         return null;
     }
+    
+    
+
+    public static String validateSchema(final InputStream streamSchema, final InputStream streamExample, final String includesDir,final String externalDir)
+    {
+        final JSONTokener schemaTokener = new JSONTokener(streamSchema);
+        final JSONObject rawSchema = new JSONObject(schemaTokener);
+        final Schema schema;
+        try
+        {
+            final SchemaClient client = new ResourcesSchemaClient(includesDir,externalDir);
+            schema = SchemaLoader.load(rawSchema, client);
+        }
+        catch (final SchemaException e)
+        {
+            LOGGER.error("Schema loading error", e);
+            return e.getLocalizedMessage();
+        }
+        try
+        {
+            final JSONTokener messageTokener = new JSONTokener(streamExample);
+            final JSONObject messageObject = new JSONObject(messageTokener);
+            schema.validate(messageObject);
+        }
+        catch (final ValidationException e)
+        {
+            final String message = "Schema: " + schema.getTitle() + " / " + schema.getDescription();
+            LOGGER.error(message);
+            return message + "\n" + readValidationException(e);
+        }
+        catch (final JSONException e)
+        {
+            final String message = "Schema: " + schema.getTitle() + " / " + schema.getDescription() + " JSON parsing failed.";
+            LOGGER.error(message, e);
+            return message + "\n" + e.getLocalizedMessage();
+        }
+        //Everything fine
+        return null;
+    }
+
+    
 
     public static String readValidationException(final ValidationException e)
     {
