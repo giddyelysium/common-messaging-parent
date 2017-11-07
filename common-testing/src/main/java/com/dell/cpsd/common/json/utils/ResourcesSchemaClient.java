@@ -31,6 +31,11 @@ class ResourcesSchemaClient extends DefaultSchemaClient
         this.includesDir = includesDir;
     }
 
+    /**
+     * Constructor to create {@link ResourcesSchemaClient} with external directory in classpath
+     * @param includesDir- additional path to look for includes
+     * @param externalDir- external directory in classpath to look for referenced file
+     */
     public ResourcesSchemaClient(final String includesDir, final String externalDir)
     {
         this.includesDir = includesDir;
@@ -56,7 +61,6 @@ class ResourcesSchemaClient extends DefaultSchemaClient
                 final File file = new File(url);
                 final String path = includesDir + "/" + file.getName();
                 InputStream stream = JsonSchemaValidation.class.getResourceAsStream(path);
-                /* Searching in amqp contract extension */
                 if (stream == null)
                 {
                     stream = ResourcesSchemaClient.class.getClassLoader().getResourceAsStream(externalDir + "/" + file.getName());
