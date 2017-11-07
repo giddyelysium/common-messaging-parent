@@ -26,10 +26,10 @@ public class JsonSchemaValidationTest
     public static final String SCHEMA_DIR   = "/messages/";
     public static final String INCLUDES_DIR = SCHEMA_DIR;
     public static final String EXAMPLE_DIR  = SCHEMA_DIR;
-    public static final String EXTERNAL_DIR = "message/properties";
+    public static final String EXTERNAL_DIR = "messaging/properties";
 
     @Test
-    public void ValidateSchemaPositive() throws Exception
+    public void validateSchemaPositive() throws Exception
     {
         String messageName = "ping";
         String errors = validateSchema(SCHEMA_DIR + messageName + ".jsd", EXAMPLE_DIR + messageName + ".json", INCLUDES_DIR);
@@ -37,7 +37,7 @@ public class JsonSchemaValidationTest
     }
 
     @Test
-    public void ValidateSchemaPositiveUsage() throws Exception
+    public void validateSchemaPositiveUsage() throws Exception
     {
         String messageName = "ping";
         String errors = validateSchema(SCHEMA_DIR + messageName + ".jsd", EXAMPLE_DIR + messageName + ".usage.json", INCLUDES_DIR);
@@ -45,7 +45,7 @@ public class JsonSchemaValidationTest
     }
 
     @Test
-    public void ValidateSchemaNegative() throws Exception
+    public void validateSchemaNegative() throws Exception
     {
         String errors = validateSchema(SCHEMA_DIR + "ping.jsd", EXAMPLE_DIR + "pong.json", INCLUDES_DIR);
         assertNotNull(errors);
@@ -56,7 +56,7 @@ public class JsonSchemaValidationTest
      * Positive - Test if the schema is successfully validated when the schema has an external reference
      */
     @Test
-    public void ValidateSchemaWithExternalReferencePositive() throws Exception
+    public void validateSchemaWithExternalReferencePositive() throws Exception
     {
         String messageName = "ping_with_external_reference";
         String errors = validateSchema(SCHEMA_DIR + messageName + ".jsd", EXAMPLE_DIR + "ping" + ".json", INCLUDES_DIR, EXTERNAL_DIR);
@@ -68,7 +68,7 @@ public class JsonSchemaValidationTest
      * schema
      */
     @Test
-    public void ValidateSchemaWithExternalReferenceWithoutReplyTo() throws Exception
+    public void validateSchemaWithExternalReferenceWithoutReplyTo() throws Exception
     {
         String messageName = "ping_with_external_reference_without_reply";
         String errors = validateSchema(SCHEMA_DIR + messageName + ".jsd",
